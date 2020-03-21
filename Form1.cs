@@ -35,5 +35,35 @@ namespace AccessDBtest
                 MessageBox.Show("Error " + ex);
             }
         }
+
+        private void btn_Login_Click(object sender, EventArgs e)
+        {
+            connection.Open();
+            OleDbCommand command = new OleDbCommand();
+            command.Connection = connection;
+            command.CommandText = "select * from EmployeeTable where Username='"+ txt_Username +"' and Password='"+ txt_Password +"' ";
+            
+            OleDbDataReader reader = command.ExecuteReader();
+            int count = 0;
+
+            while (reader.Read())
+            {
+                count = count + 1;
+
+            }
+            if (count == 1)
+            {
+                MessageBox.Show("correct");
+            }
+            if (count > 1)
+            {
+                MessageBox.Show("Duplicate Username and password");
+            }
+            else
+            {
+                MessageBox.Show("Username and password is not correct");
+            }
+            connection.Close();
+        }
     }
 }
